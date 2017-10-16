@@ -7,11 +7,12 @@ int main()
     int b = ++a;
     // a = 6, b = 6;
     
-    if (a = b)
+    if (a == b)
     {
         cout << "Yay!" << endl;
     }
     
     return 0;
 }
+
 

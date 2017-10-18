@@ -22,8 +22,7 @@ public class Poing : MonoBehaviour {
   public float BatSpeed = 4.0f;
   public float BallSpeed = 8.0f;
   public float CourtHeight = 3.0f;
-  public float CourtWidth = 4.0f;
-    //public float CourtWidth = 8.5f;
+  public float CourtWidth = 8.5f;
 
   // Current ball velocity
   public Vector3 BallVel = new Vector3(0, 0, 0);
@@ -154,4 +153,5 @@ public class Poing : MonoBehaviour {
     }
 	}
 }
+
 

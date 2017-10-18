@@ -22,7 +22,8 @@ public class Poing : MonoBehaviour {
   public float BatSpeed = 4.0f;
   public float BallSpeed = 8.0f;
   public float CourtHeight = 3.0f;
-  public float CourtWidth = 8.5f;
+  public float CourtWidth = 4.0f;
+    //public float CourtWidth = 8.5f;
 
   // Current ball velocity
   public Vector3 BallVel = new Vector3(0, 0, 0);
@@ -31,6 +32,7 @@ public class Poing : MonoBehaviour {
   public enum State {
     ServingLeft,   // Ball is attached to the left bat about to serve.
     ServingRight,  // Ball is attached to the right bat about to serve.
+    ServingUp,     // Ball is attached to the bottom bat about to serve.
     Playing,       // Ball is moving
     GameOver,      // Someone has lost.
   };
@@ -65,12 +67,11 @@ public class Poing : MonoBehaviour {
       RightBat.transform.Translate(-batUp);
     }
 
-
     //Handle bottom bat
-    if (Input.GetKey("j")) {
+    if (Input.GetKey(",")) {
       BottomBat.transform.Translate(-batSlide);
     }
-    else if (Input.GetKey("l")) {
+    else if (Input.GetKey("/")) {
       BottomBat.transform.Translate(batSlide);
     }
 
@@ -95,6 +96,16 @@ public class Poing : MonoBehaviour {
         }
         break;
 
+      case State.ServingUp:
+       // In this state we are serving
+       //Strick the ball to the bottom bat
+       Ball.transform.position = BottomBat.transform.position + new Vector3(0, 1, 0);
+       if (Input.GetKey(".")) {
+          state = State.Playing;
+          BallVel = new Vector3(BallSpeed, BallSpeed, 0);
+        }
+        break;
+
       case State.Playing:
         // In this state we are playing and must animate the ball.
         Transform t = Ball.transform;
@@ -106,18 +117,21 @@ public class Poing : MonoBehaviour {
         if (t.position.y > CourtHeight) {
           t.position = new Vector3(t.position.x, CourtHeight, t.position.y);
           BallVel = new Vector3(BallVel.x, -BallSpeed, 0);
-        } else if (t.position.y < -CourtHeight) {
+        } /*else if (t.position.y < -CourtHeight) {
           t.position = new Vector3(t.position.x, -CourtHeight, t.position.y);
           BallVel = new Vector3(BallVel.x, BallSpeed, 0);
-        }
+        }*/
 
         // bat collision
         Vector3 leftDiff = (t.position - LeftBat.transform.position);
         Vector3 rightDiff = (t.position - RightBat.transform.position);
+        Vector3 bottomDiff = (t.position - BottomBat.transform.position);
         if (BallVel.x < 0 && Mathf.Abs(leftDiff.x) < 0.4f && Mathf.Abs(leftDiff.y) < 0.8f) {
           BallVel = new Vector3(BallSpeed, BallVel.y, 0);
         } else if (BallVel.x > 0 && Mathf.Abs(rightDiff.x) < 0.4f && Mathf.Abs(rightDiff.y) < 0.8f) {
           BallVel = new Vector3(-BallSpeed, BallVel.y, 0);
+        } else if (BallVel.y < 0 && Mathf.Abs(bottomDiff.y) < 0.4f && Mathf.Abs(bottomDiff.x) < 0.8f) {
+          BallVel = new Vector3(BallSpeed, -BallVel.y, 0);
         }
 
         // score

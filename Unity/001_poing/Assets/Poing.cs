@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI; // needed for UI.Text
 using System.Collections;
 
@@ -9,6 +9,7 @@ public class Poing : MonoBehaviour {
   public GameObject Ball;
   public GameObject LeftBat;
   public GameObject RightBat;
+  public GameObject BottomBat;
 
   // The scores
   public Text LeftText;
@@ -48,6 +49,7 @@ public class Poing : MonoBehaviour {
 	void Update () {
     // Animate the bats. This happens in all states.
     Vector3 batUp = new Vector3(0, BatSpeed * DeltaT, 0);
+    Vector3 batSlide = new Vector3(BatSpeed * DeltaT, 0, 0);
 
     // Handle left bat
     if (Input.GetKey("w")) {
@@ -63,7 +65,16 @@ public class Poing : MonoBehaviour {
       RightBat.transform.Translate(-batUp);
     }
 
-    switch (state) {
+
+    //Handle bottom bat
+    if (Input.GetKey("j")) {
+      BottomBat.transform.Translate(-batSlide);
+    }
+    else if (Input.GetKey("l")) {
+      BottomBat.transform.Translate(batSlide);
+    }
+
+      switch (state) {
       case State.ServingLeft:
         // In this state we are serving
         // Stick the ball to the left bat
@@ -129,3 +140,4 @@ public class Poing : MonoBehaviour {
     }
 	}
 }
+

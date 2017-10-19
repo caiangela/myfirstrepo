@@ -20,9 +20,9 @@ public class Poing : MonoBehaviour {
   // Speeds and dimensions
   public float DeltaT = 1.0f / 60; // Note we do not use Time.deltaTime
   public float BatSpeed = 4.0f;
-  public float BallSpeed = 8.0f;
+  public float BallSpeed = 4.0f;
   public float CourtHeight = 3.0f;
-  public float CourtWidth = 3.0f;
+  public float CourtWidth = 4.0f;
 
   // Current ball velocity
   public Vector3 BallVel = new Vector3(0, 0, 0);
@@ -102,81 +102,67 @@ public class Poing : MonoBehaviour {
        if (Input.GetKey(".")) {
           state = State.Playing;
           BallVel = new Vector3(BallSpeed, BallSpeed, 0);
-        }
-        break;
+       }
+       break;
 
-      case State.Playing:
+		case State.Playing:
         // In this state we are playing and must animate the ball.
-        Transform t = Ball.transform;
+			Transform t = Ball.transform;
 
         // move the ball
-        t.Translate(BallVel * DeltaT);
+			t.Translate (BallVel * DeltaT);
 
         // bounce the ball
-        if (t.position.y > CourtHeight) {
-          t.position = new Vector3(t.position.x, CourtHeight, t.position.y);
-          BallVel = new Vector3(BallVel.x, -BallSpeed, 0);
-        } /*else if (t.position.y < -CourtHeight) {
+			if (t.position.y > CourtHeight) {
+				t.position = new Vector3 (t.position.x, CourtHeight, t.position.y);
+				BallVel = new Vector3 (BallVel.x, -BallSpeed, 0);
+			} /*else if (t.position.y < -CourtHeight) {
           t.position = new Vector3(t.position.x, -CourtHeight, t.position.y);
           BallVel = new Vector3(BallVel.x, BallSpeed, 0);
         }*/
 
         // bat collision
-        Vector3 leftDiff = (t.position - LeftBat.transform.position);
-        Vector3 rightDiff = (t.position - RightBat.transform.position);
-        Vector3 bottomDiff = (t.position - BottomBat.transform.position);
-        if (BallVel.x < 0 && Mathf.Abs(leftDiff.x) < 0.4f && Mathf.Abs(leftDiff.y) < 0.8f) {
-          BallVel = new Vector3(BallSpeed, BallVel.y, 0);
-        } else if (BallVel.x > 0 && Mathf.Abs(rightDiff.x) < 0.4f && Mathf.Abs(rightDiff.y) < 0.8f) {
-          BallVel = new Vector3(-BallSpeed, BallVel.y, 0);
-        } else if (BallVel.y < 0 && Mathf.Abs(bottomDiff.y) < 0.4f && Mathf.Abs(bottomDiff.x) < 0.8f) {
-          BallVel = new Vector3(BallSpeed, -BallVel.y, 0);
-        }
-                // new score for single player
-                if (t.position.x > CourtWidth) {
-                    state = State.ServingRight;
-                    losingScore++;
-                    LeftText.text = "" + losingScore;
-                    if (losingScore == 10) state = State.GameOver;
-                }
-                else if (t.position.x < -CourtWidth) {
-                    state = State.ServingLeft;
-                    losingScore++;
-                    LeftText.text = "" + losingScore;
-                    if (losingScore == 10) state = State.GameOver;
-                }
-                else if (t.position.y < -CourtHeight) {
-                    state = State.ServingUp;
-                    losingScore++;
-                    LeftText.text = "" + losingScore;
-                    if (losingScore == 10) state = State.GameOver;
-                }
-                /*else if (BallVel.y < 0 && Mathf.Abs(bottomDiff.y) < 0.4f && Mathf.Abs(bottomDiff.x) < 0.8f) {
-                    gainingScore++;
-                    RightText.text = "" + gainingScore;
-                    if (gainingScore == 10) state = State.GameOver;
-                }*/
-                break;
-                                    /*
-                                    // score
-                                    if (t.position.x > CourtWidth) {
-                                    state = State.ServingRight;
-                                    LeftScore++;
-                                    LeftText.text = "" + LeftScore;
-                                    if (LeftScore == 10) state = State.GameOver;
-                                    } else if (t.position.x < -CourtWidth) {
-                                    state = State.ServingLeft;
-                                    RightScore++;
-                                    RightText.text = "" + RightScore;
-                                    if (RightScore == 10) state = State.GameOver;
-                                    }
-                                    break;*/
+			Vector3 leftDiff = (t.position - LeftBat.transform.position);
+			Vector3 rightDiff = (t.position - RightBat.transform.position);
+			Vector3 bottomDiff = (t.position - BottomBat.transform.position);
+			       if (BallVel.x < 0 && Mathf.Abs (leftDiff.x) < 0.4f && Mathf.Abs (leftDiff.y) < 0.8f) {
+				BallVel = new Vector3 (BallSpeed, BallVel.y, 0);
+			} else if (BallVel.x > 0 && Mathf.Abs (rightDiff.x) < 0.4f && Mathf.Abs (rightDiff.y) < 0.8f) {
+				BallVel = new Vector3 (-BallSpeed, BallVel.y, 0);
+			} else if (BallVel.y < 0 && Mathf.Abs (bottomDiff.y) < 0.4f && Mathf.Abs (bottomDiff.x) < 0.8f) {
+				BallVel = new Vector3(BallVel.x, BallSpeed, 0);
+			} 
+                    // new score for single player
+                    if (t.position.x > CourtWidth - 2)
+                    {
+                        state = State.ServingRight;
+                        losingScore++;
+                        LeftText.text = "" + losingScore;
+                        if (losingScore == 10) state = State.GameOver;
+                    }
+                    else if (t.position.x < -CourtWidth - 2)
+                    {
+                        state = State.ServingLeft;
+                        losingScore++;
+                        LeftText.text = "" + losingScore;
+                        if (losingScore == 10) state = State.GameOver;
+                    }
+				else if (t.position.y < (-CourtHeight -5))
+                    {
+                        state = State.ServingUp;
+                        losingScore++;
+                        LeftText.text = "" + losingScore;
+                        if (losingScore == 10) state = State.GameOver;
+                    }
+                    break;
+      
 
         case State.GameOver:
         // The game is over, do nothing.
         break;
-    }
+        }
 	}
-}
+	}
+
 
 

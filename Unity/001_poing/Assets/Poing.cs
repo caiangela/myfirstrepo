@@ -13,16 +13,16 @@ public class Poing : MonoBehaviour {
 
   // The scores
   public Text LeftText;
-  public Text RightText;
-  int LeftScore = 0;
-  int RightScore = 0;
+  //public Text RightText;
+  int PlayerScore = 0;
+  //int RightScore = 0;
 
   // Speeds and dimensions
   public float DeltaT = 1.0f / 60; // Note we do not use Time.deltaTime
   public float BatSpeed = 4.0f;
   public float BallSpeed = 8.0f;
   public float CourtHeight = 3.0f;
-  public float CourtWidth = 8.5f;
+  public float CourtWidth = 4.0f;
 
   // Current ball velocity
   public Vector3 BallVel = new Vector3(0, 0, 0);
@@ -40,10 +40,10 @@ public class Poing : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
     state = State.ServingLeft;
-    LeftScore = 0;
-    RightScore = 0;
-    LeftText.text = "" + LeftScore;
-    RightText.text = "" + RightScore;
+    PlayerScore = 0;
+    //RightScore = 0;
+    LeftText.text = "" + PlayerScore;
+    //RightText.text = "" + RightScore;
 	}
 	
 	// Update is called once per frame
@@ -132,22 +132,42 @@ public class Poing : MonoBehaviour {
         } else if (BallVel.y < 0 && Mathf.Abs(bottomDiff.y) < 0.4f && Mathf.Abs(bottomDiff.x) < 0.8f) {
           BallVel = new Vector3(BallSpeed, -BallVel.y, 0);
         }
+                // new score for single player
+                if (t.position.x > CourtWidth) {
+                    state = State.ServingRight;
+                    PlayerScore--;
+                    LeftText.text = "" + PlayerScore;
+                    if (PlayerScore == -10) state = State.GameOver;
+                }
+                else if (t.position.x < -CourtWidth) {
+                    state = State.ServingLeft;
+                    PlayerScore--;
+                    LeftText.text = "" + PlayerScore;
+                    if (PlayerScore == -10) state = State.GameOver;
+                }
+                else if (t.position.y < -CourtHeight) {
+                    state = State.ServingUp;
+                    PlayerScore--;
+                    LeftText.text = "" + PlayerScore;
+                    if (PlayerScore == -10) state = State.GameOver;
+                }
+                break;
+                                    /*
+                                    // score
+                                    if (t.position.x > CourtWidth) {
+                                    state = State.ServingRight;
+                                    LeftScore++;
+                                    LeftText.text = "" + LeftScore;
+                                    if (LeftScore == 10) state = State.GameOver;
+                                    } else if (t.position.x < -CourtWidth) {
+                                    state = State.ServingLeft;
+                                    RightScore++;
+                                    RightText.text = "" + RightScore;
+                                    if (RightScore == 10) state = State.GameOver;
+                                    }
+                                    break;*/
 
-        // score
-        if (t.position.x > CourtWidth) {
-          state = State.ServingRight;
-          LeftScore++;
-          LeftText.text = "" + LeftScore;
-          if (LeftScore == 10) state = State.GameOver;
-        } else if (t.position.x < -CourtWidth) {
-          state = State.ServingLeft;
-          RightScore++;
-          RightText.text = "" + RightScore;
-          if (RightScore == 10) state = State.GameOver;
-        }
-        break;
-
-      case State.GameOver:
+        case State.GameOver:
         // The game is over, do nothing.
         break;
     }

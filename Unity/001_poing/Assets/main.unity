@@ -184,7 +184,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 43506073}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.36, z: 8.21}
+  m_LocalPosition: {x: 0, y: -3.3, z: 0}
   m_LocalScale: {x: 1, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -361,7 +361,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 484353764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: 0, z: 9}
+  m_LocalPosition: {x: 4, y: 0, z: 9}
   m_LocalScale: {x: 0.2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -508,7 +508,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 754898390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8, y: 0, z: 9}
+  m_LocalPosition: {x: -4, y: 0, z: 9}
   m_LocalScale: {x: 0.2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 1193587613}
   - component: {fileID: 1193587612}
   m_Layer: 5
-  m_Name: LeftScoretext
+  m_Name: PlayerScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -608,7 +608,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -86.4, y: 200}
+  m_AnchoredPosition: {x: 75, y: 160}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1193587612
@@ -666,7 +666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1329554563
 RectTransform:
   m_ObjectHideFlags: 0
@@ -682,7 +682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 155.25, y: 200}
+  m_AnchoredPosition: {x: 150, y: 160}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1329554564
@@ -769,7 +769,6 @@ MonoBehaviour:
   RightBat: {fileID: 484353764}
   BottomBat: {fileID: 43506073}
   LeftText: {fileID: 1193587612}
-  RightText: {fileID: 1329554564}
   DeltaT: 0.016666668
   BatSpeed: 4
   BallSpeed: 8
@@ -907,8 +906,8 @@ Camera:
   m_GameObject: {fileID: 2082946798}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.13884082, g: 0.17647058, b: 0.16557093, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

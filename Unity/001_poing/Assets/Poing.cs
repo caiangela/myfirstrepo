@@ -13,16 +13,16 @@ public class Poing : MonoBehaviour {
 
   // The scores
   public Text LeftText;
-  //public Text RightText;
-  int PlayerScore = 0;
-  //int RightScore = 0;
+  public Text RightText;
+  int losingScore = 0;
+  int gainingScore = 0;
 
   // Speeds and dimensions
   public float DeltaT = 1.0f / 60; // Note we do not use Time.deltaTime
   public float BatSpeed = 4.0f;
   public float BallSpeed = 8.0f;
   public float CourtHeight = 3.0f;
-  public float CourtWidth = 4.0f;
+  public float CourtWidth = 3.0f;
 
   // Current ball velocity
   public Vector3 BallVel = new Vector3(0, 0, 0);
@@ -40,10 +40,10 @@ public class Poing : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
     state = State.ServingLeft;
-    PlayerScore = 0;
-    //RightScore = 0;
-    LeftText.text = "" + PlayerScore;
-    //RightText.text = "" + RightScore;
+    losingScore = 0;
+    gainingScore = 0;
+    LeftText.text = "" + losingScore;
+    RightText.text = "" + gainingScore;
 	}
 	
 	// Update is called once per frame
@@ -135,22 +135,27 @@ public class Poing : MonoBehaviour {
                 // new score for single player
                 if (t.position.x > CourtWidth) {
                     state = State.ServingRight;
-                    PlayerScore--;
-                    LeftText.text = "" + PlayerScore;
-                    if (PlayerScore == -10) state = State.GameOver;
+                    losingScore++;
+                    LeftText.text = "" + losingScore;
+                    if (losingScore == 10) state = State.GameOver;
                 }
                 else if (t.position.x < -CourtWidth) {
                     state = State.ServingLeft;
-                    PlayerScore--;
-                    LeftText.text = "" + PlayerScore;
-                    if (PlayerScore == -10) state = State.GameOver;
+                    losingScore++;
+                    LeftText.text = "" + losingScore;
+                    if (losingScore == 10) state = State.GameOver;
                 }
                 else if (t.position.y < -CourtHeight) {
                     state = State.ServingUp;
-                    PlayerScore--;
-                    LeftText.text = "" + PlayerScore;
-                    if (PlayerScore == -10) state = State.GameOver;
+                    losingScore++;
+                    LeftText.text = "" + losingScore;
+                    if (losingScore == 10) state = State.GameOver;
                 }
+                /*else if (BallVel.y < 0 && Mathf.Abs(bottomDiff.y) < 0.4f && Mathf.Abs(bottomDiff.x) < 0.8f) {
+                    gainingScore++;
+                    RightText.text = "" + gainingScore;
+                    if (gainingScore == 10) state = State.GameOver;
+                }*/
                 break;
                                     /*
                                     // score
